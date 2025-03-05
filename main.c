@@ -332,8 +332,8 @@ quit(int f, int n)
 		return (ABORT);
 	if (s == FIOERR || s == UERROR)
 		return (FALSE);
-	if (s == FALSE
-	    || eyesno("Modified buffers exist; really exit") == TRUE) {
+	// Don't prompt the eyorn here, it's already prompted individually.
+	if (s == FALSE || s == TRUE) {
 		vttidy();
 		closetags();
 		exit(0);

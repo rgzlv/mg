@@ -133,7 +133,7 @@ eyesno(const char *sp)
 	if (inmacro)
 		return (TRUE);
 
-	rep = eread("%s? (yes or no) ", buf, sizeof(buf),
+	rep = eread("%s? (yes, y, no or n) ", buf, sizeof(buf),
 	    EFNUL | EFNEW | EFCR, sp);
 	for (;;) {
 		if (rep == NULL) {
@@ -148,11 +148,11 @@ eyesno(const char *sp)
 				maclcur->l_fp = lp->l_fp;
 				free(lp);
 			}
-			if (strcasecmp(rep, "yes") == 0) {
+			if (strcasecmp(rep, "yes") == 0 || strcasecmp(rep, "y") == 0) {
 				eerase();
 				return (TRUE);
 			}
-			if (strcasecmp(rep, "no") == 0) {
+			if (strcasecmp(rep, "no") == 0 || strcasecmp(rep, "n") == 0) {
 				eerase();
 				return (FALSE);
 			}
