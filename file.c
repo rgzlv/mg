@@ -682,11 +682,7 @@ writeout(FILE ** ffp, struct buffer *bp, char *fn)
         }
 	lpend = bp->b_headp;
 	eobnl = 0;
-	if (llength(lback(lpend)) != 0) {
-		eobnl = eyorn("No newline at end of file, add one");
-		if (eobnl != TRUE && eobnl != FALSE)
-			return (eobnl); /* abort */
-	}
+	if (llength(lback(lpend)) != 0) eobnl = TRUE;
 	/* open writes message */
 	if ((s = ffwopen(ffp, fn, bp)) != FIOSUC)
 		return (FALSE);
