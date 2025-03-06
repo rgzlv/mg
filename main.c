@@ -55,18 +55,17 @@ char		 pat[NPAT];			/* pattern		*/
 
 static void	 edinit(struct buffer *);
 static void	 pty_init(void);
-static __dead void usage(void);
+static void usage(void);
 
 extern char	*__progname;
 extern void     closetags(void);
 
-static __dead void
+static void
 usage(void)
 {
 	fprintf(stderr, "usage: %s [-nR] [-b file] [-f mode] [-u file] "
 	    "[+number] [file ...]\n",
 	    __progname);
-	exit(1);
 }
 
 int
@@ -87,7 +86,7 @@ main(int argc, char **argv)
 		err(1, "pledge");
 #endif
 
-	while ((o = getopt(argc, argv, "nRb:f:u:")) != -1)
+	while ((o = getopt(argc, argv, "hnRb:f:u:")) != -1)
 		switch (o) {
 		case 'b':
 			batch = 1;
@@ -99,6 +98,9 @@ main(int argc, char **argv)
 		case 'n':
 			nobackups = 1;
 			break;
+		case 'h':
+			usage();
+			return 0;
 		case 'f':
 			if (init_fcn_name != NULL)
 				errx(1, "cannot specify more than one "
@@ -110,6 +112,7 @@ main(int argc, char **argv)
 			break;
 		default:
 			usage();
+			return 1;
 		}
 
 	if (batch && (conffile != NULL)) {
