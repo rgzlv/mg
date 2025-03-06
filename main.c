@@ -33,21 +33,21 @@
 #include "log.h"
 #endif
 
-int		 thisflag;			/* flags, this command	*/
-int		 lastflag;			/* flags, last command	*/
-int		 curgoal;			/* goal column		*/
-int		 startrow;			/* row to start		*/
-int		 doaudiblebell;			/* audible bell toggle	*/
-int		 dovisiblebell;			/* visible bell toggle	*/
-int		 dblspace;			/* sentence end #spaces	*/
-int		 allbro;			/* all buffs read-only	*/
-int		 batch;				/* for regress tests	*/
-struct buffer	*curbp;				/* current buffer	*/
-struct buffer	*bheadp;			/* BUFFER list head	*/
-struct mgwin	*curwp;				/* current window	*/
-struct mgwin	*wheadp;			/* MGWIN listhead	*/
-struct vhead	 varhead;			/* Variable list head	*/
-char		 pat[NPAT];			/* pattern		*/
+int    thisflag;        /* flags, this command */
+int    lastflag;        /* flags, last command */
+int    curgoal;         /* goal column */
+int    startrow;        /* row to start */
+int    doaudiblebell;   /* audible bell toggle */
+int    dovisiblebell;   /* visible bell toggle */
+int    dblspace;        /* sentence end #spaces */
+int    allbro;          /* all buffs read-only */
+int    batch;           /* for regress tests */
+struct buffer *curbp;   /* current buffer */
+struct buffer *bheadp;  /* BUFFER list head */
+struct mgwin  *curwp;   /* current window */
+struct mgwin  *wheadp;  /* MGWIN listhead */
+struct vhead   varhead; /* Variable list head */
+char   pat[NPAT];       /* pattern */
 
 #ifndef __dead
 #define __dead __attribute__ ((__noreturn__))
