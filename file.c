@@ -661,9 +661,10 @@ makebkfile(int f, int n)
 int
 writeout(FILE ** ffp, struct buffer *bp, char *fn)
 {
-	struct stat	 statbuf;
-	int		 s;
-	char		 dp[NFILEN];
+	struct stat  statbuf;
+	struct line *lpend;
+	int          s, eobnl;
+	char         dp[NFILEN];
 
 	if (stat(fn, &statbuf) == -1 && errno == ENOENT) {
 		errno = 0;
@@ -678,16 +679,20 @@ writeout(FILE ** ffp, struct buffer *bp, char *fn)
 			ewprintf("%s: no such directory", dp);
 			return (FIOERR);
 		}
-        }
+	}
+	lpend = bp->b_headp;
+	eobnl = 0;
+	if (llength(lback(lpend)) != 0) eobnl = !nonl;
+	int last_len = llength(lback(lpend));
 	/* open writes message */
 	if ((s = ffwopen(ffp, fn, bp)) != FIOSUC)
 		return (FALSE);
-	s = ffputbuf(*ffp, bp, !nonl);
+	s = ffputbuf(*ffp, bp, eobnl);
 	if (s == FIOSUC) {
 		/* no write error */
 		s = ffclose(*ffp, bp);
 		if (s == FIOSUC)
-			ewprintf("Wrote %s", fn);
+			ewprintf("Wrote %s, last_len: %d", fn, last_len);
 	} else {
 		/* print a message indicating write error */
 		(void)ffclose(*ffp, bp);
