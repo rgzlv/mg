@@ -683,7 +683,6 @@ writeout(FILE ** ffp, struct buffer *bp, char *fn)
 	lpend = bp->b_headp;
 	eobnl = 0;
 	if (llength(lback(lpend)) != 0) eobnl = !nonl;
-	int last_len = llength(lback(lpend));
 	/* open writes message */
 	if ((s = ffwopen(ffp, fn, bp)) != FIOSUC)
 		return (FALSE);
@@ -692,7 +691,7 @@ writeout(FILE ** ffp, struct buffer *bp, char *fn)
 		/* no write error */
 		s = ffclose(*ffp, bp);
 		if (s == FIOSUC)
-			ewprintf("Wrote %s, last_len: %d", fn, last_len);
+			ewprintf("Wrote %s", fn);
 	} else {
 		/* print a message indicating write error */
 		(void)ffclose(*ffp, bp);
