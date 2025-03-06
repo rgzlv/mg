@@ -42,6 +42,7 @@ int    dovisiblebell;   /* visible bell toggle */
 int    dblspace;        /* sentence end #spaces */
 int    allbro;          /* all buffs read-only */
 int    batch;           /* for regress tests */
+int    nonl;            /* don't append newline on save */
 struct buffer *curbp;   /* current buffer */
 struct buffer *bheadp;  /* BUFFER list head */
 struct mgwin  *curwp;   /* current window */
@@ -63,7 +64,7 @@ extern void     closetags(void);
 static void
 usage(void)
 {
-	fprintf(stderr, "usage: %s [-nR] [-b file] [-f mode] [-u file] "
+	fprintf(stderr, "usage: %s [-nNR] [-b file] [-f mode] [-u file] "
 	    "[+number] [file ...]\n",
 	    __progname);
 }
@@ -86,7 +87,7 @@ main(int argc, char **argv)
 		err(1, "pledge");
 #endif
 
-	while ((o = getopt(argc, argv, "hnRb:f:u:")) != -1)
+	while ((o = getopt(argc, argv, "hnNRb:f:u:")) != -1)
 		switch (o) {
 		case 'b':
 			batch = 1;
@@ -94,6 +95,9 @@ main(int argc, char **argv)
 			break;
 		case 'R':
 			allbro = 1;
+			break;
+		case 'N':
+			nonl = TRUE;
 			break;
 		case 'n':
 			nobackups = 1;

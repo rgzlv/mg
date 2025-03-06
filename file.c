@@ -662,8 +662,7 @@ int
 writeout(FILE ** ffp, struct buffer *bp, char *fn)
 {
 	struct stat	 statbuf;
-	struct line	*lpend;
-	int		 s, eobnl;
+	int		 s;
 	char		 dp[NFILEN];
 
 	if (stat(fn, &statbuf) == -1 && errno == ENOENT) {
@@ -680,13 +679,10 @@ writeout(FILE ** ffp, struct buffer *bp, char *fn)
 			return (FIOERR);
 		}
         }
-	lpend = bp->b_headp;
-	eobnl = 0;
-	if (llength(lback(lpend)) != 0) eobnl = TRUE;
 	/* open writes message */
 	if ((s = ffwopen(ffp, fn, bp)) != FIOSUC)
 		return (FALSE);
-	s = ffputbuf(*ffp, bp, eobnl);
+	s = ffputbuf(*ffp, bp, !nonl);
 	if (s == FIOSUC) {
 		/* no write error */
 		s = ffclose(*ffp, bp);

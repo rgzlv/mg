@@ -779,6 +779,7 @@ extern int		 dovisiblebell;
 extern int		 dblspace;
 extern int		 allbro;
 extern int		 batch;
+extern int     nonl;
 extern char	 	 cinfo[];
 extern char		*keystrings[];
 extern char		 pat[NPAT];
